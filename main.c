@@ -39,7 +39,6 @@ int main(void)
 
     initial(&n, &t, &dt, &tau_dep, &fg_0, &FeH, &nd, r, &L, eta, &fg, fd, Sigd, &qd, Sigg, &qg, a, &M, Mr, Mi, Mg, Mc, Mp, a_0, type, gene);
 
-    printf ("%d %f\n", k, fg_0);
 
     for (j=0; j<nt; j++) {
 
@@ -50,6 +49,8 @@ int main(void)
       typeI_migration(&n, type, &qg, &C1, &fg, Mp, a, &M, &dt, a_0, Mr, gene, Mi, Mg, Mc);
 
       typeII_migration(&n, type, &fg, &C2, &alpha, Mp, a, &M, &dt);
+
+      trap(&n, a, Mp, &M, type);
 
       next(&fg, &fg_0, &t, &tau_dep, &nd, Sigg, r, &qg, &dt, &Time, &nt, &j);
 

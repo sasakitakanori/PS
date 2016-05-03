@@ -23,7 +23,7 @@
 #include "gas_acc.h"
 #include "typeI_migration.h"
 #include "typeII_migration.h"
-//#include "trap.h"
+#include "trap.h"
 #include "next.h"
 //#include "gimpact.h"
 

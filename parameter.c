@@ -16,7 +16,7 @@ void parameter(int *nd, int *nt, int *PS, double *Time, double *FeH, double *alp
 
 *nd = 30000;  //number of grid of disk; disk radius = nd*1.0e-3 AU
 *nt = 10000;  //number of grid of time
-*PS = 1000;  //number of calculations
+*PS = 100;  //number of calculations
 *Time = 2.0e7;  //calculation time
 *FeH = 0.1;  //metalicity (Fe/H)
 *alpha = 1.0e-3;  //alpha viscosity
