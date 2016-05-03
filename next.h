@@ -12,6 +12,6 @@
 #ifndef _next_
 #define _next_
 
-void next(double *fg, double *fg_0, double *t, double *tau_dep, int *nd, double Sigg[], double r[], double *qg, double *dt, double *Time, int *nt, int *j);
+void next(double *fg, double *fg_0, double *t, double *tau_dep, int *nd, double Sigg[], double r[], double *dt, double *Time, int *nt, int *j, double *dM, double *M, double *alpha, double *L, double T[], double eta[]);
 
 #endif

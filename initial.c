@@ -11,10 +11,10 @@
 
 #include "header.h"
 
-void initial(int *n, double *t, double *dt, double *tau_dep, double *fg_0, double *FeH, int *nd, double r[], double T[], double *L, double eta[], double *fg, double fd[], double Sigd[], double *qd, double Sigg[], double *qg, double a[], double *M, double Mr[], double Mi[], double Mg[], double Mc[], double Mp[], double a_0[], int type[], int gene[])
+void initial(int *n, double *t, double *dt, double *tau_dep, double *fg_0, double *FeH, int *nd, double r[], double T[], double *L, double eta[], double *fg, double fd[], double Sigd[], double *qd, double Sigg[], double *qg, double a[], double *M, double Mr[], double Mi[], double Mg[], double Mc[], double Mp[], double a_0[], int type[], int gene[], double *dM, double *alpha)
 {
   int i;
-  double logtau_dep, logf, f_disk, fd_0, a_ice, Mc_iso, da;
+  double logtau_dep, logf, f_disk, fd_0, a_ice, Mc_iso, da, Sigg_v, Sigg_i, T_v, T_i;
 
 
   *n = 0;
@@ -34,26 +34,31 @@ void initial(int *n, double *t, double *dt, double *tau_dep, double *fg_0, doubl
   } while (f_disk > 30 || f_disk < 0.03);
 
   *fg_0 = f_disk;
-  fd_0 = pow(10.0, *FeH)*f_disk;
-
+  *fg = *fg_0;
+  *dM = 3.0e-9*(*fg);
 
   // initial conditions for disk
   for (i=0; i<*nd; i++) {
     r[i] = 1.0e-2 + 1.0e-3*(double)i;
-    T[i] = 2.8e2*pow(r[i], -0.5)*pow(*L/LS, 0.25);
-  }
 
-  a_ice = 2.7*pow(*L/LS, 0.5);
-  for (i=0; i<*nd; i++) {
-    if (r[i] < a_ice) eta[i] = 1.0;
+    Sigg_v = 2.1e3*pow(*M/MS, 1.0/5.0)*pow(*alpha/1.0e-3, -4.0/5.0)*pow(*dM/1.0e-8, 3.0/5.0)*pow(r[i], -3.0/5.0);
+    Sigg_i = 2.7e3*pow(*L/LS, -2.0/7.0)*pow(*M/MS, 9.0/14.0)*pow(*alpha/1.0e-3, -1.0)*(*dM/1.0e-8)*pow(r[i], -15.0/14.0);
+    if (Sigg_v < Sigg_i) Sigg[i] = Sigg_v;
+    else Sigg[i] = Sigg_i;
+
+    T_v = 2.0e2*pow(*M/MS, 3.0/10.0)*pow(*alpha/1.0e-3, -1.0/5.0)*pow(*dM/1.0e-8, 2.0/5.0)*pow(r[i], -9.0/10.0);
+    T_i = 1.5e2*pow(*L/LS, 2.0/7.0)*pow(*M/MS, -1.0/7.0)*pow(r[i], -3.0/7.0);
+    if (T_v > T_i) T[i] = T_v;
+    else T[i] = T_i;
+
+    if (T[i] > 1.7e2) eta[i] = 1.0;
     else eta[i] = 4.2;
   }
 
-  *fg = *fg_0;
+  fd_0 = pow(10.0, *FeH)*f_disk;
   for (i=0; i<*nd; i++) {
     fd[i] = fd_0;
     Sigd[i] = 0.32*eta[i]*fd[i]*pow(r[i]/10.0, -(*qd));
-    Sigg[i] = 7.5e1*(*fg_0)*pow(r[i]/10.0, -(*qg));
   }
 
 

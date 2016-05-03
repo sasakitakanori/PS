@@ -25,7 +25,7 @@ int main(void)
 
 
   // variable of disk
-  double r[nd], Sigd[nd], Sigg[nd], fd[nd], T[nd], eta[nd], fg, fg_0, tau_dep;
+  double r[nd], Sigd[nd], Sigg[nd], fd[nd], T[nd], eta[nd], fg, fg_0, tau_dep, dM;
 
   // variable of planet
   int type[200], gene[200];
@@ -35,7 +35,7 @@ int main(void)
   // calculations for each disk
   for (k=0; k<PS; k++) {
 
-    initial(&n, &t, &dt, &tau_dep, &fg_0, &FeH, &nd, r, T, &L, eta, &fg, fd, Sigd, &qd, Sigg, &qg, a, &M, Mr, Mi, Mg, Mc, Mp, a_0, type, gene);
+    initial(&n, &t, &dt, &tau_dep, &fg_0, &FeH, &nd, r, T, &L, eta, &fg, fd, Sigd, &qd, Sigg, &qg, a, &M, Mr, Mi, Mg, Mc, Mp, a_0, type, gene, &dM, &alpha);
 
     //printf ("%d %f\n", k, fg_0);
 
@@ -51,7 +51,7 @@ int main(void)
 
       trap(&n, a, Mp, &M, type);
 
-      next(&fg, &fg_0, &t, &tau_dep, &nd, Sigg, r, &qg, &dt, &Time, &nt, &j);
+      next(&fg, &fg_0, &t, &tau_dep, &nd, Sigg, r, &dt, &Time, &nt, &j, &dM, &M, &alpha, &L, T, eta);
 
     }
 

@@ -22,7 +22,7 @@ void parameter(int *nd, int *nt, int *PS, double *Time, double *FeH, double *alp
 *alpha = 1.0e-3;  //alpha viscosity
 *qd = 1.5;  //power of dust density
 *qg = 1.0;  //power of gas density
-*C1 = 0.03;  //reduction factor of Type I migration
+*C1 = 0.01;  //reduction factor of Type I migration
 *C2 = 0.1;  //reduction factor of Type II migration
 *M = MS;  //star's mass
 *L = LS;  //star's luminosity
