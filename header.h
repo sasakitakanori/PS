@@ -26,5 +26,6 @@
 #include "trap.h"
 #include "next.h"
 //#include "gimpact.h"
+#include "output.h"
 
 #endif

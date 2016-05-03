@@ -13,8 +13,6 @@
 
 int main(void)
 {
-  FILE *fp;
-
   int i, j, k, n;
   double t, dt;
 
@@ -56,15 +54,7 @@ int main(void)
 
     }
 
-
-    // output
-    if ((fp = fopen("a_Mp.dat", "a")) == NULL) {
-      printf("cannot open file\n");
-      exit(1);
-    }
-    for (i=0; i<n; i++) fprintf(fp, "%f %f\n", a[i], Mp[i]/ME);
-    fprintf(fp, "\n");
-    fclose(fp);
+    output(&n, a, Mp);
 
   }
 
