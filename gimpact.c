@@ -13,7 +13,7 @@
 
 void gimpact(double e[], double a[], double Mp[], double peri[], double apo[], double *M, double *t, int *n, double Mr[], double Mi[])
 {
-  int i, j, k, l, tmp_i, kk, ll;
+  int i, j, k, l, tmp_i, ll;
   double e_h, A, B, rH, Tk[100][100], mu, e0, aa, bb, theta, theta_i, theta_j, omega_i, omega_j, dt_system;
   double tau_short, e_esc, rho[100], rho_m, s, E_0, E, Sig_a, tmp, ran, prob, lambda, epsi, lambda2, epsi2;
   int em_i, em_j, e_enc_in[100], e_enc_out[100], em_max_in, em_max_out, em_max_in2, em_max_out2, g1, g2, gtmp;
@@ -236,8 +236,6 @@ void gimpact(double e[], double a[], double Mp[], double peri[], double apo[], d
       }
     }
 
-    kk = k;
-    ll = l;
 
     // until all giant impact pairs are found
     do {
@@ -264,7 +262,7 @@ void gimpact(double e[], double a[], double Mp[], double peri[], double apo[], d
       }
 
 
-      if (kk!=0) {
+      if (k!=0) {
         g1 = em_j;
         tmp = 0.0;
 
@@ -321,10 +319,11 @@ void gimpact(double e[], double a[], double Mp[], double peri[], double apo[], d
 
         Mp[g1] = Mp[g1] + Mp[g2];
         Mp[g2] = 1.0e20;
+        k--;
       }
 
 
-      if (ll!=0) {
+      if (l!=0) {
         g1 = em_i;
         tmp = 0.0;
 
@@ -381,9 +380,10 @@ void gimpact(double e[], double a[], double Mp[], double peri[], double apo[], d
 
         Mp[g1] = Mp[g1] + Mp[g2];
         Mp[g2] = 1.0e20;
+        l--;
       }
 
-    } while (k!=0 && l!=0);
+    } while ((k!=0 && l!=0));
 
     *t += dt_system;
 
