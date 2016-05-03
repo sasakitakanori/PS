@@ -9,8 +9,8 @@
 //
 //
 
-#ifndef _header_h
-#define _header_h
+#ifndef _header_
+#define _header_
 
 #include <stdio.h>
 #include <math.h>
