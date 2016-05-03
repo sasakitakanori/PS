@@ -25,7 +25,7 @@ int main(void)
 
 
   // variable of disk
-  double r[nd], Sigd[nd], Sigg[nd], fd[nd], eta[nd], fg, fg_0, tau_dep;
+  double r[nd], Sigd[nd], Sigg[nd], fd[nd], T[nd], eta[nd], fg, fg_0, tau_dep;
 
   // variable of planet
   int type[100], gene[100];
@@ -35,7 +35,7 @@ int main(void)
   // calculations for each disk
   for (k=0; k<PS; k++) {
 
-    initial(&n, &t, &dt, &tau_dep, &fg_0, &FeH, &nd, r, &L, eta, &fg, fd, Sigd, &qd, Sigg, &qg, a, &M, Mr, Mi, Mg, Mc, Mp, a_0, type, gene);
+    initial(&n, &t, &dt, &tau_dep, &fg_0, &FeH, &nd, r, T, &L, eta, &fg, fd, Sigd, &qd, Sigg, &qg, a, &M, Mr, Mi, Mg, Mc, Mp, a_0, type, gene);
 
 
     for (j=0; j<nt; j++) {
@@ -44,7 +44,7 @@ int main(void)
 
       gas_acc(&n, type, &alpha, a, &L, &M, &k1, Mp, &k2, &fg, Mg, &dt, Mc);
 
-      typeI_migration(&n, type, &qg, &C1, &fg, Mp, a, &M, &dt, a_0, Mr, gene, Mi, Mg, Mc);
+      typeI_migration(&n, type, &qg, &C1, &fg, Mp, a, &M, &dt, a_0, Mr, gene, Mi, Mg, Mc, &nd, r, T, Sigg, &L);
 
       typeII_migration(&n, type, &fg, &C2, &alpha, Mp, a, &M, &dt);
 
@@ -54,7 +54,11 @@ int main(void)
 
     }
 
+    //gimpact(e, a, Mp, peri, apo, &M, &t, &n);
+
     output(&n, a, Mp);
+
+    for (i=0; i<n; i++) printf("%f %f\n", a[i], Mp[i]/ME);
 
   }
 

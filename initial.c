@@ -11,7 +11,7 @@
 
 #include "header.h"
 
-void initial(int *n, double *t, double *dt, double *tau_dep, double *fg_0, double *FeH, int *nd, double r[], double *L, double eta[], double *fg, double fd[], double Sigd[], double *qd, double Sigg[], double *qg, double a[], double *M, double Mr[], double Mi[], double Mg[], double Mc[], double Mp[], double a_0[], int type[], int gene[])
+void initial(int *n, double *t, double *dt, double *tau_dep, double *fg_0, double *FeH, int *nd, double r[], double T[], double *L, double eta[], double *fg, double fd[], double Sigd[], double *qd, double Sigg[], double *qg, double a[], double *M, double Mr[], double Mi[], double Mg[], double Mc[], double Mp[], double a_0[], int type[], int gene[])
 {
   int i;
   double logtau_dep, logf, f_disk, fd_0, a_ice, Mc_iso, da;
@@ -40,6 +40,7 @@ void initial(int *n, double *t, double *dt, double *tau_dep, double *fg_0, doubl
   // initial conditions for disk
   for (i=0; i<*nd; i++) {
     r[i] = 1.0e-2 + 1.0e-3*(double)i;
+    T[i] = 2.8e2*pow(r[i], -0.5)*pow(*L/LS, 0.25);
   }
 
   a_ice = 2.7*pow(*L/LS, 0.5);

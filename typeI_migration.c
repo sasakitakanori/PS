@@ -11,17 +11,27 @@
 
 #include "header.h"
 
-void typeI_migration(int *n, int type[], double *qg, double *C1, double *fg, double Mp[], double a[], double *M, double *dt, double a_0[], double Mr[], int gene[], double Mi[], double Mg[], double Mc[])
+void typeI_migration(int *n, int type[], double *qg, double *C1, double *fg, double Mp[], double a[], double *M, double *dt, double a_0[], double Mr[], int gene[], double Mi[], double Mg[], double Mc[], int *nd, double r[], double T[], double Sigg[], double *L)
 {
-  int i;
+  int i, j;
   double tau_mig;
+  double dr, p, q, Omega, Cs;
 
   for (i=0; i<*n; i++) {
 
     if (type[i] == 0 || type[i] == 1) {
 
-      tau_mig = 5.0e4*pow(10.0, 1.5-(*qg))*pow(*C1*(*fg), -1.0)*pow(Mp[i]/ME, -1.0)*pow(a[i], *qg)*pow(*M/MS, 1.5);
-      a[i] -= *dt*a[i]/tau_mig;
+      // Type I migratiion rate by Tanaka et al. 2002
+      for (j=0; j<*nd-1; j++) {
+        if (a[i] > r[j] && a[i] < r[j+1]) {
+          p = (log(Sigg[j+1])-log(Sigg[j]))/(log(r[j+1])-log(r[j]));
+          q = (log(T[j+1])-log(T[j]))/(log(r[j+1])-log(r[j]));
+          Omega = pow(G*(*M)/pow(a[i]*AU, 3.0), 0.5);
+          Cs = 1.0e5*pow(T[j]/3.0e2, 0.5)/AU;
+        }
+      }
+      dr = *C1*1.08*(p + 0.80*q - 2.52)*(Mp[i]/(*M))*(Sigg[j]*AU*AU*a[i]*a[i]/(*M))*pow(a[i]*Omega/Cs, 2.0)*a[i]*Omega;
+      a[i] += (*dt*YEAR)*dr;
 
 
       // next generation of the embryo

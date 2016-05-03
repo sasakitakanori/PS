@@ -12,6 +12,6 @@
 #ifndef _typeI_migration_
 #define _typeI_migration_
 
-void typeI_migration(int *n, int type[], double *qg, double *C1, double *fg, double Mp[], double a[], double *M, double *dt, double a_0[], double Mr[], int gene[], double Mi[], double Mg[], double Mc[]);
+void typeI_migration(int *n, int type[], double *qg, double *C1, double *fg, double Mp[], double a[], double *M, double *dt, double a_0[], double Mr[], int gene[], double Mi[], double Mg[], double Mc[], int *nd, double r[], double T[], double Sigg[], double *L);
 
 #endif

@@ -1,6 +1,6 @@
 #Makefile
-main: main.o parameter.o initial.o core_acc.o gas_acc.o typeI_migration.o typeII_migration.o trap.o next.o output.o
-	gcc -o a.out main.o parameter.o initial.o core_acc.o gas_acc.o typeI_migration.o typeII_migration.o trap.o next.o output.o
+main: main.o parameter.o initial.o core_acc.o gas_acc.o typeI_migration.o typeII_migration.o trap.o next.o gimpact.o output.o
+	gcc -o a.out main.o parameter.o initial.o core_acc.o gas_acc.o typeI_migration.o typeII_migration.o trap.o next.o gimpact.o output.o
 
 main.o: main.c
 	gcc -c main.c
@@ -28,6 +28,9 @@ trap.o: trap.c
 
 next.o: next.c
 	gcc -c next.c
+
+gimpact.o: gimpact.c
+	gcc -c gimpact.c
 
 output.o: output.c
 	gcc -c output.c
