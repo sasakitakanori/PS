@@ -28,8 +28,8 @@ int main(void)
   double r[nd], Sigd[nd], Sigg[nd], fd[nd], T[nd], eta[nd], fg, fg_0, tau_dep;
 
   // variable of planet
-  int type[100], gene[100];
-  double Mp[100], Mc[100], Mr[100], Mi[100], Mg[100], a[100], a_0[100], e[100], peri[100], apo[100];
+  int type[200], gene[200];
+  double Mp[200], Mc[200], Mr[200], Mi[200], Mg[200], a[200], a_0[200], e[200], peri[200], apo[200];
 
 
   // calculations for each disk
@@ -37,6 +37,7 @@ int main(void)
 
     initial(&n, &t, &dt, &tau_dep, &fg_0, &FeH, &nd, r, T, &L, eta, &fg, fd, Sigd, &qd, Sigg, &qg, a, &M, Mr, Mi, Mg, Mc, Mp, a_0, type, gene);
 
+    //printf ("%d %f\n", k, fg_0);
 
     for (j=0; j<nt; j++) {
 
@@ -54,11 +55,11 @@ int main(void)
 
     }
 
-    //gimpact(e, a, Mp, peri, apo, &M, &t, &n);
+    gimpact(e, a, Mp, peri, apo, &M, &t, &n, Mr, Mi);
 
     output(&n, a, Mp);
 
-    for (i=0; i<n; i++) printf("%f %f\n", a[i], Mp[i]/ME);
+    //for (i=0; i<n; i++) printf("%f %f\n", a[i], Mp[i]/ME);
 
   }
 

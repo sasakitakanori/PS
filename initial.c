@@ -27,11 +27,11 @@ void initial(int *n, double *t, double *dt, double *tau_dep, double *fg_0, doubl
   *tau_dep = pow(10.0, logtau_dep);
 
   // f_disk: longnormal distributions centered on 1 with a dispersion of 1
-  //         upper cutoff at 30 & lower cutoff at 0.01
+  //         upper cutoff at 30 & lower cutoff at 0.03
   do {
     logf = sqrt(-2.0*log(((double)rand()+1.0)/((double)RAND_MAX+2.0)))*sin(2.0*M_PI*((double)rand()+1.0)/((double)RAND_MAX+2.0));
-        f_disk = pow(10.0, logf);
-  } while (f_disk > 30 || f_disk < 0.01);
+    f_disk = pow(10.0, logf);
+  } while (f_disk > 30 || f_disk < 0.03);
 
   *fg_0 = f_disk;
   fd_0 = pow(10.0, *FeH)*f_disk;
@@ -68,21 +68,21 @@ void initial(int *n, double *t, double *dt, double *tau_dep, double *fg_0, doubl
   } while (a[(*n)-1] < a_ice);
 
   do {
-        Mc_iso = 0.16*pow(4.2, 1.5)*pow(fd_0, 1.5)*pow(a[*n], 0.75-1.5*(*qd-1.5))*pow(*M/MS, -0.5)*ME;
-        da = 5.0*pow(2.0*Mc_iso/(3.0*(*M)), 1.0/3.0)*a[*n];
-        a[(*n)+1] = a[*n] + 2.0*da;
-        (*n)++;
+    Mc_iso = 0.16*pow(4.2, 1.5)*pow(fd_0, 1.5)*pow(a[*n], 0.75-1.5*(*qd-1.5))*pow(*M/MS, -0.5)*ME;
+    da = 5.0*pow(2.0*Mc_iso/(3.0*(*M)), 1.0/3.0)*a[*n];
+    a[(*n)+1] = a[*n] + 2.0*da;
+    (*n)++;
   } while (a[(*n)-1] < 10.0);
 
   for (i=0; i<*n; i++){
-        Mr[i] = 1.0e20;  // rock mass
-        Mi[i] = 0.0;     // ice mass
-        Mg[i] = 0.0;     // gas mass
-        Mc[i] = Mr[i] + Mi[i];  // core mass = rock mass + ice mass
-        Mp[i] = Mc[i] + Mg[i];   // planet mass = core mass + gas mass
-        a_0[i] = a[i];   // initial radius
-        type[i] = 0;       // 0:embryo  1:
-        gene[i] = 1;     // generation
-    }
+    Mr[i] = 1.0e20;  // rock mass
+    Mi[i] = 0.0;     // ice mass
+    Mg[i] = 0.0;     // gas mass
+    Mc[i] = Mr[i] + Mi[i];  // core mass = rock mass + ice mass
+    Mp[i] = Mc[i] + Mg[i];   // planet mass = core mass + gas mass
+    a_0[i] = a[i];   // initial radius
+    type[i] = 0;     // 0:embryo  1:onset of gas accretion 2:onset of Type II migration 3:termination of gas accretion 4:termination of accretion
+    gene[i] = 1;     // generation
+  }
 
 }

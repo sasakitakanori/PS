@@ -12,6 +12,6 @@
 #ifndef _gimpact_
 #define _gimpact_
 
-void gimpact(double e[], double a[], double Mp[], double peri[], double apo[], double *M, double *t, int *n);
+void gimpact(double e[], double a[], double Mp[], double peri[], double apo[], double *M, double *t, int *n, double Mr[], double Mi[]);
 
 #endif
