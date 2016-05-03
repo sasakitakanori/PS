@@ -45,7 +45,7 @@ int main(void)
 
       gas_acc(&n, type, &alpha, a, &L, &M, &k1, Mp, &k2, &fg, Mg, &dt, Mc);
 
-      typeI_migration(&n, type, &qg, &C1, &fg, Mp, a, &M, &dt, a_0, Mr, gene, Mi, Mg, Mc, &nd, r, T, Sigg, &L);
+      typeI_migration(&n, type, &qg, &C1, &fg, Mp, a, &M, &dt, a_0, Mr, gene, Mi, Mg, Mc, &nd, r, T, Sigg, &L, &alpha);
 
       typeII_migration(&n, type, &fg, &C2, &alpha, Mp, a, &M, &dt);
 
