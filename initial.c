@@ -14,7 +14,7 @@
 void initial(int *n, double *t, double *dt, double *tau_dep, double *fg_0, double *FeH, int *nd, double r[], double T[], double *L, double eta[], double *fg, double fd[], double Sigd[], double *qd, double Sigg[], double *qg, double a[], double *M, double Mr[], double Mi[], double Mg[], double Mc[], double Mp[], double a_0[], int type[], int gene[], double *dM, double *alpha)
 {
   int i;
-  double logtau_dep, logf, f_disk, fd_0, a_ice, Mc_iso, da, Sigg_v, Sigg_i, T_v, T_i;
+  double logtau_dep, logf, f_disk, fd_0, a_ice, Mc_iso, da, Sigg_v, Sigg_i, T_v, T_i, r_sv, r_si, r_snow, f_ice, h;
 
 
   *n = 0;
@@ -37,6 +37,11 @@ void initial(int *n, double *t, double *dt, double *tau_dep, double *fg_0, doubl
   *fg = *fg_0;
   *dM = 3.0e-9*(*fg);
 
+  r_sv = 1.2*pow(*M/MS, 1.0/3.0)*pow(*alpha/1.0e-3, -2.0/9.0)*pow(*dM/1.0e-8, 4.0/9.0);
+  r_si = 0.75*pow(*L/LS, 2.0/3.0)*pow(*M/MS, -1.0/3.0);
+  if (r_sv > r_si) r_snow = r_sv;
+  else r_snow = r_si;
+
   // initial conditions for disk
   for (i=0; i<*nd; i++) {
     r[i] = 1.0e-2 + 1.0e-3*(double)i;
@@ -52,7 +57,11 @@ void initial(int *n, double *t, double *dt, double *tau_dep, double *fg_0, doubl
     else T[i] = T_i;
 
     if (T[i] > 1.7e2) eta[i] = 1.0;
-    else eta[i] = 4.2;
+    else {
+      h = 5.0e-2*sqrt(T[i]/3.0e2)*pow(r[i], 1.5);
+      f_ice = 1.0 + 2.0*exp(-pow(r[i] - r_snow, 2.0)/(h*h));  // accumulation of icy grain at snow line
+      eta[i] = 4.2*f_ice;
+    }
   }
 
   fd_0 = pow(10.0, *FeH)*f_disk;
