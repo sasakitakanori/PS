@@ -58,22 +58,24 @@ void core_acc(int *n, int type[], double r[], double a[], double Mp[], double *M
       tau_acc = 2.2e5*pow(eta[k]*f_ice, -1.0)*pow(fd[k], -1.0)*pow(*fg, -0.4)*pow(10.0, 0.4*(1.5-(*qg)))*pow(10.0, 1.5-(*qd))*pow(a[i], 2.7+(*qd-1.5)+0.4*(*qg-1.5))*pow(Mp[i]/ME, 1.0/3.0)*pow(*M/MS, -1.0/6.0);
 
       dMc = *dt*Mp[i]/tau_acc;
-      Mr[i] += dMc/eta[k]*f_ice;
-      if (eta[k] > 1.0) Mi[i] += dMc*(eta[k]*f_ice-1.0)/eta[k]*f_ice;
-      Mc[i] = Mr[i] + Mi[i];
-      Mp[i] = Mc[i] + Mg[i];
+      if (dMc < 1.0*ME) {  // reject bad case
+
+        Mr[i] += dMc/(eta[k]*f_ice);
+        if (eta[k] > 1.0) Mi[i] += dMc*(eta[k]*f_ice-1.0)/(eta[k]*f_ice);
+        Mc[i] = Mr[i] + Mi[i];
+        Mp[i] = Mc[i] + Mg[i];
 
 
-      // reducing the disk mass as the core accretion
-      for (j=k-in; j<k+out; j++) {
-        Sigd[j] = (Sigd[j]*M_PI*AU*AU*(r[j+1]*r[j+1]-r[j]*r[j]) - dMc/(in+out+1))/(M_PI*AU*AU*(r[j+1]*r[j+1]-r[j]*r[j]));
-        if (Sigd[j] < 0.0) {
-          Mc[i] += Sigd[j]*M_PI*AU*AU*(r[j+1]*r[j+1]-r[j]*r[j]);
-          Sigd[j] = 0.0;
+        // reducing the disk mass as the core accretion
+        for (j=k-in; j<k+out; j++) {
+          Sigd[j] = (Sigd[j]*M_PI*AU*AU*(r[j+1]*r[j+1]-r[j]*r[j]) - dMc/(in+out+1))/(M_PI*AU*AU*(r[j+1]*r[j+1]-r[j]*r[j]));
+          if (Sigd[j] < 0.0) {
+            Mc[i] += Sigd[j]*M_PI*AU*AU*(r[j+1]*r[j+1]-r[j]*r[j]);
+            Sigd[j] = 0.0;
+          }
+          fd[j] = Sigd[j]/(0.32*eta[j]*f_ice*pow(r[j]/10.0, -(*qd)));
         }
-        fd[j] = Sigd[j]/(0.32*eta[j]*f_ice*pow(r[j]/10.0, -(*qd)));
       }
-
 
       // type1: initiation of gas accretion
       if (type[i] == 0) {

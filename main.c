@@ -37,7 +37,7 @@ int main(void)
 
     initial(&n, &t, &dt, &tau_dep, &fg_0, &FeH, &nd, r, T, &L, eta, &fg, fd, Sigd, &qd, Sigg, &qg, a, &M, Mr, Mi, Mg, Mc, Mp, a_0, type, gene, &dM, &alpha);
 
-    //printf ("%d %f\n", k, fg_0);
+    printf ("%d %f\n", k, fg_0);
 
     for (j=0; j<nt; j++) {
 
