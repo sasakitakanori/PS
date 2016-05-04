@@ -39,7 +39,6 @@ void typeI_migration(int *n, int type[], double *qg, double *C1, double *fg, dou
           else {
               Theta = (1.0-sqrt(1.0-2.0*k))/k;
               Theta2 = 1.0/(1.0+(1.5-p)*mcc);
-              printf("%e %e\n", Theta, Theta2);
               if (Theta2 < Theta) Theta = Theta2;
           }
 
