@@ -41,7 +41,7 @@ int main(void)
 
     for (j=0; j<nt; j++) {
 
-      core_acc(&n, type, r, a, Mp, &M, &nd, eta, fd, &fg, &qg, &qd, &dt, Mr, Mi, Mc, Mg, Sigd, &p1, &p2, &kappa);
+      core_acc(&n, type, r, a, Mp, &M, &nd, eta, fd, &fg, &qg, &qd, &dt, Mr, Mi, Mc, Mg, Sigd, &p1, &p2, &kappa, T, &alpha, &L, &dM);
 
       gas_acc(&n, type, &alpha, a, &L, &M, &k1, Mp, &k2, &fg, Mg, &dt, Mc);
 
@@ -51,7 +51,7 @@ int main(void)
 
       trap(&n, a, Mp, &M, type);
 
-      next(&fg, &fg_0, &t, &tau_dep, &nd, Sigg, r, &dt, &Time, &nt, &j, &dM, &M, &alpha, &L, T, eta);
+      next(&fg, &fg_0, &t, &tau_dep, &nd, Sigg, r, &dt, &Time, &nt, &j, &dM, &M, &alpha, &L, T, eta, fd, Sigd);
 
     }
 

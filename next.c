@@ -11,10 +11,10 @@
 
 #include "header.h"
 
-void next(double *fg, double *fg_0, double *t, double *tau_dep, int *nd, double Sigg[], double r[], double *dt, double *Time, int *nt, int *j, double *dM, double *M, double *alpha, double *L, double T[], double eta[])
+void next(double *fg, double *fg_0, double *t, double *tau_dep, int *nd, double Sigg[], double r[], double *dt, double *Time, int *nt, int *j, double *dM, double *M, double *alpha, double *L, double T[], double eta[], double fd[], double Sigd[])
 {
   int i;
-  double Sigg_v, Sigg_i, T_v, T_i, r_sv, r_si, r_snow, h, f_ice;
+  double Sigg_v, Sigg_i, T_v, T_i, r_sv, r_si, r_snow, h, f_ice, eta_b;
 
   *fg = *fg_0*exp(-(*t)/(*tau_dep));
   *dM = 3.0e-9*(*fg);
@@ -35,11 +35,24 @@ void next(double *fg, double *fg_0, double *t, double *tau_dep, int *nd, double 
     if (T_v > T_i) T[i] = T_v;
     else T[i] = T_i;
 
-    if (T[i] > 1.7e2) eta[i] = 1.0;
+    eta_b = eta[i];
+    if (T[i] > 1.7e2) {
+      if (eta_b > 2.0) {
+        h = 5.0e-2*sqrt(T[i]/3.0e2)*pow(r[i], 1.5)*pow(*M/MS, -0.5);
+        f_ice = 1.0 + 2.0*exp(-pow(r[i] - r_snow, 2.0)/(h*h));  // accumulation of icy grain at snow line
+        fd[i] /= 4.2*f_ice;
+        Sigd[i] /= 4.2*f_ice;
+        eta[i] = 1.0;
+      }
+    }
     else {
-      h = 5.0e-2*sqrt(T[i]/3.0e2)*pow(r[i], 1.5);
-      f_ice = 1.0 + 2.0*exp(-pow(r[i] - r_snow, 2.0)/(h*h));  // accumulation of icy grain at snow line
-      eta[i] = 4.2*f_ice;
+      if (eta_b < 2.0) {
+        h = 5.0e-2*sqrt(T[i]/3.0e2)*pow(r[i], 1.5)*pow(*M/MS, -0.5);
+        f_ice = 1.0 + 2.0*exp(-pow(r[i] - r_snow, 2.0)/(h*h));  // accumulation of icy grain at snow line
+        fd[i] *= 4.2*f_ice;
+        Sigd[i] *= 4.2*f_ice;
+        eta[i] = 4.2*f_ice;
+      }
     }
   }
 
