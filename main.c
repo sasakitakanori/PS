@@ -57,7 +57,7 @@ int main(void)
 
     gimpact(e, a, Mp, peri, apo, &M, &t, &n, Mr, Mi);
 
-    output(&n, a, Mp);
+    output(&n, a, Mp, Mr, Mi, Mg);
 
     //for (i=0; i<n; i++) printf("%f %f\n", a[i], Mp[i]/ME);
 

@@ -25,7 +25,7 @@ void parameter(int *nd, int *nt, int *PS, double *Time, double *FeH, double *alp
 *C1 = 0.01;  //reduction factor of Type I migration
 *C2 = 0.1;  //reduction factor of Type II migration
 *M = MS;  //star's mass
-*L = LS;  //star's luminosity
+*L = pow(*M/MS, 4.0)*LS;  //star's luminosity
 *p1 = 0.25;  //power-law index for Mc_hydro
 *p2 = 0.25;  //power-law index for Mc_hydro
 *kappa = 1.0;  //absorption coefficient of dust

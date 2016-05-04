@@ -12,6 +12,6 @@
 #ifndef _output_
 #define _output_
 
-void output(int *n, double a[], double Mp[]);
+void output(int *n, double a[], double Mp[], double Mr[], double Mi[], double Mg[]);
 
 #endif

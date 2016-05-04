@@ -14,7 +14,7 @@
 void initial(int *n, double *t, double *dt, double *tau_dep, double *fg_0, double *FeH, int *nd, double r[], double T[], double *L, double eta[], double *fg, double fd[], double Sigd[], double *qd, double Sigg[], double *qg, double a[], double *M, double Mr[], double Mi[], double Mg[], double Mc[], double Mp[], double a_0[], int type[], int gene[], double *dM, double *alpha)
 {
   int i;
-  double logtau_dep, logf, f_disk, fd_0, Mc_iso, da, Sigg_v, Sigg_i, T_v, T_i, r_sv, r_si, r_snow, f_ice, h;
+  double logtau_dep, logf, f_disk, fd_0, Mc_iso, da, Sigg_v, Sigg_i, T_v, T_i, r_sv, r_si, r_snow, f_ice, h, hd;
 
 
   *n = 0;
@@ -33,7 +33,9 @@ void initial(int *n, double *t, double *dt, double *tau_dep, double *fg_0, doubl
     f_disk = pow(10.0, logf);
   } while (f_disk > 30 || f_disk < 0.03);
 
-  *fg_0 = f_disk;
+  hd = pow(*M/MS, 2.0);
+
+  *fg_0 = f_disk*hd;
   *fg = *fg_0;
   *dM = 3.0e-9*(*fg);
 
@@ -64,7 +66,7 @@ void initial(int *n, double *t, double *dt, double *tau_dep, double *fg_0, doubl
     }
   }
 
-  fd_0 = pow(10.0, *FeH)*f_disk;
+  fd_0 = pow(10.0, *FeH)*f_disk*hd;
   for (i=0; i<*nd; i++) {
     fd[i] = fd_0;
     Sigd[i] = 0.32*eta[i]*fd[i]*pow(r[i]/10.0, -(*qd));
