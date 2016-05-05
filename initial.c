@@ -37,7 +37,7 @@ void initial(int *n, double *t, double *dt, double *tau_dep, double *fg_0, doubl
 
   *fg_0 = f_disk*hd;
   *fg = *fg_0;
-  *dM = 3.0e-9*(*fg);
+  *dM = 3.0e-9*(*fg)*(*alpha/1.0e-3);
 
   r_sv = 1.2*pow(*M/MS, 1.0/3.0)*pow(*alpha/1.0e-3, -2.0/9.0)*pow(*dM/1.0e-8, 4.0/9.0);
   r_si = 0.75*pow(*L/LS, 2.0/3.0)*pow(*M/MS, -1.0/3.0);
