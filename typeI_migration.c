@@ -28,9 +28,9 @@ void typeI_migration(int *n, int type[], double *qg, double *C1, double *fg, dou
           q = (log(T[j+1])-log(T[j]))/(log(r[j+1])-log(r[j]));
           Omega = pow(G*(*M)/pow(a[i]*AU, 3.0), 0.5);
           Cs = 1.0e5*pow(T[j]/3.0e2, 0.5)/AU;
+          dr = *C1*1.08*(p + 0.80*q - 2.52)*(Mp[i]/(*M))*(Sigg[j]*AU*AU*a[i]*a[i]/(*M))*pow(a[i]*Omega/Cs, 2.0)*a[i]*Omega;
         }
       }
-      dr = *C1*1.08*(p + 0.80*q - 2.52)*(Mp[i]/(*M))*(Sigg[j]*AU*AU*a[i]*a[i]/(*M))*pow(a[i]*Omega/Cs, 2.0)*a[i]*Omega;
       a[i] += (*dt*YEAR)*dr;
 
 
