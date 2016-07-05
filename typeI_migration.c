@@ -35,7 +35,7 @@ void typeI_migration(int *n, int type[], double *qg, double *C1, double *fg, dou
 
 
       // next generation of the embryo
-      if (a[i] < 0.5*a_0[i]) {
+      if (a[i] < 0.5*a_0[i] && gene[i] < 5) {
 
         a[*n] = a_0[i];
         a_0[*n] = a_0[i];
