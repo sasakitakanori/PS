@@ -21,41 +21,43 @@ int main(void)
   int nd, nt, PS;
   double Time, FeH, alpha, qd, qg, C1, C2, M, L, p1, p2, kappa, k1, k2;
 
-  parameter(&nd, &nt, &PS, &Time, &FeH, &alpha, &qd, &qg, &C1, &C2, &M, &L, &p1, &p2, &kappa, &k1, &k2);
+  parameter(&nd, &nt, &PS, &FeH, &alpha, &qd, &qg, &C1, &C2, &M, &L, &p1, &p2, &kappa, &k1, &k2);
 
 
   // variable of disk
-  double r[nd], Sigd[nd], Sigg[nd], fd[nd], T[nd], eta[nd], fg, fg_0, tau_dep, dM;
+  int fossilize = 0;
+  double r[nd], Sigd[nd], Sigg[nd], fd[nd], T[nd], eta[nd], fg, fg_0, tau_dep, dM, r_snow;
 
   // variable of planet
-  int type[200], gene[200];
-  double Mp[200], Mc[200], Mr[200], Mi[200], Mg[200], a[200], a_0[200], e[200], peri[200], apo[200];
+  int type[500], gene[500];
+  double Mp[500], Mc[500], Mr[500], Mi[500], Mg[500], a[500], a_0[500], e[500], peri[500], apo[500];
 
 
   // calculations for each disk
   for (k=0; k<PS; k++) {
 
-    initial(&n, &t, &dt, &tau_dep, &fg_0, &FeH, &nd, r, T, &L, eta, &fg, fd, Sigd, &qd, Sigg, &qg, a, &M, Mr, Mi, Mg, Mc, Mp, a_0, type, gene, &dM, &alpha);
+    initial(&n, &t, &dt, &Time, &tau_dep, &fg_0, &FeH, &nd, r, T, &L, eta, &fg, fd, Sigd, &qd, Sigg, &qg, a, &M, Mr, Mi, Mg, Mc, Mp, a_0, type, gene, &dM, &alpha, &r_snow);
 
     printf ("%d %f\n", k, fg_0);
 
-    for (j=0; j<nt; j++) {
+    for (j=1; j<nt; j++) {
 
       core_acc(&n, type, r, a, Mp, &M, &nd, eta, fd, &fg, &qg, &qd, &dt, Mr, Mi, Mc, Mg, Sigd, &p1, &p2, &kappa, T, &alpha, &L, &dM);
 
       gas_acc(&n, type, &alpha, a, &L, &M, &k1, Mp, &k2, &fg, Mg, &dt, Mc);
 
-      typeI_migration(&n, type, &qg, &C1, &fg, Mp, a, &M, &dt, a_0, Mr, gene, Mi, Mg, Mc, &nd, r, T, Sigg, &L);
+      //typeI_migration(&n, type, &qg, &C1, &fg, Mp, a, &M, &dt, a_0, Mr, gene, Mi, Mg, Mc, &nd, r, T, Sigg, &L);
 
-      typeII_migration(&n, type, &fg, &C2, &alpha, Mp, a, &M, &dt);
+      //typeII_migration(&n, type, &fg, &C2, &alpha, Mp, a, &M, &dt);
 
       trap(&n, a, Mp, &M, type);
 
-      next(&fg, &fg_0, &t, &tau_dep, &nd, Sigg, r, &dt, &Time, &nt, &j, &dM, &M, &alpha, &L, T, eta, fd, Sigd);
+      next(&fg, &fg_0, &t, &tau_dep, &nd, Sigg, r, &dt, &Time, &nt, &j, &dM, &M, &alpha, &L, T, eta, fd, Sigd, &fossilize, &r_snow);
 
     }
 
-    gimpact(e, a, Mp, peri, apo, &M, &t, &n, Mr, Mi);
+    printf ("%d\n", n);
+    gimpact(e, a, Mp, peri, apo, &M, &t, &n, Mr, Mi, type);
 
     output(&n, a, Mp, Mr, Mi, Mg);
 

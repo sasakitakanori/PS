@@ -27,8 +27,8 @@ void typeII_migration(int *n, int type[], double *fg, double *C2, double *alpha,
       a[i] -= *dt*a[i]/tau_mig;
 
       // type4: no more planetesimals and gas around the embryo
-      if (a[i] < 0.04) {
-        a[i] = 0.04;
+      if (a[i] < 0.01) {
+        a[i] = 0.0;//0.04;
         type[i] = 4;
       }
 

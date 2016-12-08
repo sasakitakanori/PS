@@ -11,13 +11,12 @@
 
 #include "header.h"
 
-void parameter(int *nd, int *nt, int *PS, double *Time, double *FeH, double *alpha, double *qd, double *qg, double *C1, double *C2, double *M, double *L, double *p1, double *p2, double *kappa, double *k1, double *k2)
+void parameter(int *nd, int *nt, int *PS, double *FeH, double *alpha, double *qd, double *qg, double *C1, double *C2, double *M, double *L, double *p1, double *p2, double *kappa, double *k1, double *k2)
 {
 
 *nd = 30000;  //number of grid of disk; disk radius = nd*1.0e-3 AU
 *nt = 10000;  //number of grid of time
 *PS = 1000;  //number of calculations
-*Time = 2.0e7;  //calculation time
 *FeH = 0.1;  //metalicity (Fe/H)
 *alpha = 1.0e-3;  //alpha viscosity
 *qd = 1.5;  //power of dust density

@@ -17,7 +17,7 @@ void typeI_migration(int *n, int type[], double *qg, double *C1, double *fg, dou
   double tau_mig;
   double dr, p, q, Omega, Cs;
 
-  for (i=0; i<*n; i++) {
+  for (i=1; i<*n; i++) {
 
     if (type[i] == 0 || type[i] == 1) {
 
@@ -52,8 +52,8 @@ void typeI_migration(int *n, int type[], double *qg, double *C1, double *fg, dou
       }
 
       // type4: no more planetesimals and gas around the embryo
-      if (a[i] < 0.04) {
-        a[i] = 0.04;
+      if (a[i] < 0.01) {
+        a[i] = 0.0;//0.04;
         type[i] = 4;
       }
 
