@@ -35,7 +35,7 @@ int main(void)
   // calculations for each disk
   for (k=0; k<PS; k++) {
 
-    initial(&n, &t, &dt, &tau_dep, &fg_0, &FeH, &nd, r, T, &L, eta, &fg, fd, Sigd, &qd, Sigg, &qg, a, &M, Mr, Mi, Mg, Mc, Mp, a_0, type, gene, &dM, &alpha);
+    initial(&n, &t, &dt, &tau_dep, &fg_0, &FeH, &nd, r, T, &L, eta, &fg, fd, Sigd, &qd, Sigg, &qg, a, &M, Mr, Mi, Mg, Mc, Mp, a_0, type, gene);
 
     printf ("%d %f\n", k, fg_0);
 

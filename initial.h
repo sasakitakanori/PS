@@ -12,6 +12,6 @@
 #ifndef _initial_
 #define _initial_
 
-void initial(int *n, double *t, double *dt, double *tau_dep, double *fg_0, double *FeH, int *nd, double r[], double T[], double *L, double eta[], double *fg, double fd[], double Sigd[], double *qd, double Sigg[], double *qg, double a[], double *M, double Mr[], double Mi[], double Mg[], double Mc[], double Mp[], double a_0[], int type[], int gene[], double *dM, double *alpha);
+void initial(int *n, double *t, double *dt, double *tau_dep, double *fg_0, double *FeH, int *nd, double r[], double T[], double *L, double eta[], double *fg, double fd[], double Sigd[], double *qd, double Sigg[], double *qg, double a[], double *M, double Mr[], double Mi[], double Mg[], double Mc[], double Mp[], double a_0[], int type[], int gene[]);
 
 #endif
