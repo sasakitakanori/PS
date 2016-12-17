@@ -13,7 +13,7 @@
 
 void gimpact(double e[], double a[], double Mp[], double peri[], double apo[], double *M, double *t, int *n, double Mr[], double Mi[], int type[])
 {
-  int i, j, k, l, tmp_i, ll;
+  int i, j, k, l, tmp_i, ll, g;
   double e_h, A, B, rH, Tk[200][200], mu, e0, aa, bb, theta, theta_i, theta_j, omega_i, omega_j, dt_system;
   double tau_short, e_esc, rho[200], rho_m, s, E_0, E, Sig_a, tmp, ran, prob, lambda, epsi, lambda2, epsi2;
   int em_i, em_j, e_enc_in[200], e_enc_out[200], em_max_in, em_max_out, em_max_in2, em_max_out2, g1, g2, gtmp;
@@ -21,11 +21,15 @@ void gimpact(double e[], double a[], double Mp[], double peri[], double apo[], d
 
   Cj = 2.0/3.0;
 
+  for (i=*n-1; i>0; i--) {
+    if (type[i] == 2) g = i;
+  }
+
   // set orbital properties
   for (i=0; i<*n; i++) {
     //if (1e-2*ME < Mp[i] && Mp[i] < 10.0*ME) {
-    //if ((type[i] == 0 || type[i] == 1) && 1e-2*ME < Mp[i] && Mp[i] < 10.0*ME) {
-    if (type[i] == 0 || type[i] == 1) {
+    if ((type[i] == 0 || type[i] == 1) && 1e-2*ME < Mp[i] && Mp[i] < 10.0*ME && a[i] < a[g]) {
+    //if (type[i] == 0 || type[i] == 1) {
       rho[i] = (5.0*Mr[i] + 1.0*Mi[i])/(Mr[i] + Mi[i]);
       rH = pow(Mp[i]/(3.0*(*M)), 1.0/3.0);
       e[i] = rH*sqrt(-1.0*log((double)rand()/((double)RAND_MAX+1)));
@@ -42,12 +46,12 @@ void gimpact(double e[], double a[], double Mp[], double peri[], double apo[], d
 
     for (i=0; i<*n-1; i++) {
       //if (1e-2*ME < Mp[i] && Mp[i] < 10.0*ME) {
-      //if ((type[i] == 0 || type[i] == 1) && 1e-2*ME < Mp[i] && Mp[i] < 10.0*ME) {
-      if (type[i] == 0 || type[i] == 1) {
+      if ((type[i] == 0 || type[i] == 1) && 1e-2*ME < Mp[i] && Mp[i] < 10.0*ME && a[i] < a[g]) {
+      //if (type[i] == 0 || type[i] == 1) {
           for (j=i+1; j<(*n); j++) {
           //if (1e-2*ME < Mp[j] && Mp[j] < 10.0*ME) {
-          //if ((type[j] == 0 || type[j] == 1) && 1e-2*ME < Mp[j] && Mp[j] < 10.0*ME) {
-          if (type[i] == 0 || type[i] == 1) {
+          if ((type[j] == 0 || type[j] == 1) && 1e-2*ME < Mp[j] && Mp[j] < 10.0*ME && a[i] < a[g]) {
+          //if (type[i] == 0 || type[i] == 1) {
 
             aa = sqrt(a[i]*a[j]);
             bb = fabs(a[i]-a[j]);
@@ -112,8 +116,8 @@ void gimpact(double e[], double a[], double Mp[], double peri[], double apo[], d
 
     for (i=0; i<*n; i++) {
       //if (1e-2*ME < Mp[i] && Mp[i] < 10.0*ME) {
-      //if ((type[i] == 0 || type[i] == 1) && 1e-2*ME < Mp[i] && Mp[i] < 10.0*ME){
-      if (type[i] == 0 || type[i] == 1) {
+      if ((type[i] == 0 || type[i] == 1) && 1e-2*ME < Mp[i] && Mp[i] < 10.0*ME && a[i] < a[g]){
+      //if (type[i] == 0 || type[i] == 1) {
         if (i != em_i && i != em_j) {
 
           if ((apo[em_j]>peri[i]) && (peri[em_j]<apo[i])) {
@@ -251,9 +255,9 @@ void gimpact(double e[], double a[], double Mp[], double peri[], double apo[], d
 
       for (i=0; i<(*n)+1; i++) {
         //if (1e-2*ME < Mp[i] && Mp[i] < 10.0*ME) {
-        //if ((type[i] == 0 || type[i] == 1) && 1e-2*ME < Mp[i] && Mp[i] < 10.0*ME){
-        if (type[i] == 0 || type[i] == 1) {
-          
+        if ((type[i] == 0 || type[i] == 1) && 1e-2*ME < Mp[i] && Mp[i] < 10.0*ME && a[i] < a[g]){
+        //if (type[i] == 0 || type[i] == 1) {
+
           if (i!=em_i) {
             if ((apo[em_i]>peri[i]) && (peri[em_i]<apo[i])) {
               e_enc_in[l] = i;
@@ -327,6 +331,8 @@ void gimpact(double e[], double a[], double Mp[], double peri[], double apo[], d
         apo[g2] = (1.0 + e[g2])*a[g2];
 
         Mp[g1] = Mp[g1] + Mp[g2];
+        Mr[g1] = Mr[g1] + Mr[g2];
+	      Mi[g1] = Mi[g1] + Mi[g2];
         Mp[g2] = 1.0e20;
         k--;
       }
@@ -388,6 +394,8 @@ void gimpact(double e[], double a[], double Mp[], double peri[], double apo[], d
         apo[g2] = (1.0 + e[g2])*a[g2];
 
         Mp[g1] = Mp[g1] + Mp[g2];
+	      Mr[g1] = Mr[g1] + Mr[g2];
+	      Mi[g1] = Mi[g1] + Mi[g2];
         Mp[g2] = 1.0e20;
         l--;
       }

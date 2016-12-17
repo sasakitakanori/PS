@@ -50,9 +50,9 @@ int main(void)
 
       //typeII_migration(&n, type, &fg, &C2, &alpha, Mp, a, &M, &dt);
 
-      trap(&n, a, Mp, &M, type);
+      //trap(&n, a, Mp, &M, type);
 
-      next(&fg, &fg_0, &t, &tau_dep, &nd, Sigg, r, &dt, &Time, &nt, &j, &dM, &M, &alpha, &L, T, eta, fd, Sigd, &fossilize, &r_snow);
+      next(&fg, &fg_0, &t, &tau_dep, &nd, Sigg, r, &dt, &Time, &nt, &j, &dM, &M, &alpha, &L, T, eta, fd, Sigd, &fossilize, &r_snow, type, &n, a);
 
     }
 

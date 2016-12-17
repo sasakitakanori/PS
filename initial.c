@@ -33,11 +33,11 @@ void initial(int *n, double *t, double *dt, double *Time, double *tau_dep, doubl
   do {
     logf = sqrt(-2.0*log(((double)rand()+1.0)/((double)RAND_MAX+2.0)))*sin(2.0*M_PI*((double)rand()+1.0)/((double)RAND_MAX+2.0));
     f_disk = pow(10.0, logf);
-  } while (f_disk > 30 || f_disk < 0.03);
+  } while (f_disk > 5 || f_disk < 0.2);
 
   hd = pow(*M/MS, 2.0);
 
-  *fg_0 = 1.0;//f_disk*hd;
+  *fg_0 = f_disk*hd;
   *fg = *fg_0;
   *dM = 1.5e-7*(*fg)*(*alpha/1.0e-3);
 

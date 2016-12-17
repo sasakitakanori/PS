@@ -16,7 +16,7 @@ void output(int *n, double a[], double Mp[], double Mr[], double Mi[], double Mg
   FILE *fp;
   int i, j;
 
-  if ((fp = fopen("a_Mp2.dat", "a")) == NULL) {
+  if ((fp = fopen("a_Mp_default_05_2.dat", "a")) == NULL) {
     printf("cannot open file\n");
     exit(1);
   }
